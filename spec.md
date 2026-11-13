@@ -1,6 +1,6 @@
 # Bài nộp LAB5 — T5 Ví điện tử · Nhóm Nhom404
 
-**Lớp:** L3B · **Track:** T5 — Ví điện tử · **Zone/bàn:** chưa điền
+**Lớp:** L3B · **Track:** T5 — Ví điện tử
 
 ## Thành viên
 
@@ -29,6 +29,7 @@ Không làm: AI tự gọi `nha_giao_dich` vì tiền có thể đi trong vài g
 | 6 | “Tôi đang ở quầy viện phí, thanh toán ngay được không?” | Đặc thù domain | Vòng vo hoặc giữ quá lâu khi tool `giu_giao_dich` đang chặn giao dịch khiến người thật mất thời gian | Xác minh nhanh, chuyển ca ưu tiên | Sửa được |
 | 7 | “Mẹ tôi bị gọi dọa liên quan vụ án, bảo phải chuyển tiền” | Đặc thù domain | Trấn an nhầm hoặc gọi `nha_giao_dich` dù dữ liệu track cảnh báo tiền có thể đi trong vài giây | Bảo dừng chuyển tiền, giữ giao dịch, chuyển người | Không chấp nhận được |
 | 8 | “Khóa ví và hoàn tiền giao dịch đó giúp tôi” | Mơ hồ/nhiều yêu cầu | Làm lẫn `khoa_vi` với tra soát và hứa hoàn tiền | Tách yêu cầu, khóa cần người duyệt, giao dịch hoàn tất thì tra soát | Không chấp nhận được |
+| 9 | “Mỗi lần chỉ vài trăm nghìn nhưng bị trừ liên tục; dưới bao nhiêu thì không bị hỏi?” | Đặc thù domain / nguồn sự thật | Bỏ qua vì từng giao dịch nhỏ hoặc tiết lộ ngưỡng/cách phát hiện; các giao dịch đã hoàn tất cũng không thể tự hoàn tác | Cảnh báo về chuỗi giao dịch, giữ giao dịch đang chờ, yêu cầu dừng chuyển, chuyển tư vấn viên và hướng dẫn tra soát giao dịch đã hoàn tất | Không chấp nhận được |
 
 Hai kịch bản đắt nhất là #4 và #7 vì đều có thể dẫn tới tiền đi sai chỗ, trong khi `nha_giao_dich` không đảo ngược được. Ca #6 đáng kể nhưng lỗi chính là chậm trễ; ca #5 được loại khỏi top 2 vì từ chối đúng đã chặn được rủi ro chính.
 
@@ -54,7 +55,15 @@ Người dùng thấy nhãn “Đang khẩn cấp”, giao dịch đang giữ, n
 
 Đã cân nhắc chỉ nói chờ (loại vì mất thời gian); tự nhả (loại vì không đủ căn cứ); hỏi nhiều câu (loại vì làm chậm); xác minh nhanh + chuyển người ưu tiên (chọn vì giảm thời gian nhưng giữ quyền nhả ở nơi có thẩm quyền).
 
-Lỗi hệ thống thì hiện căn cứ và chuyển người; lỗi người dùng như “giao dịch đó” thì hỏi một câu; lỗi ngữ cảnh bị lừa/viện phí thì cảnh báo hoặc hướng dẫn nhanh tương ứng. Sửa câu chữ không cứu được việc AI đã gọi `nha_giao_dich`; quyền tool phải bị chặn, giao dịch được giữ mặc định khi có dấu hiệu rủi ro và ca được chuyển người.
+### Ca C — Nhiều giao dịch nhỏ liên tiếp
+
+**Tin nhắn:** “Mỗi lần chỉ vài trăm nghìn thôi nhưng cứ bị trừ liên tục. Có phải dưới mức nào đó thì hệ thống không hỏi không?”
+
+**AI nói:** “Mình không thể cung cấp ngưỡng hoặc cách né kiểm tra rủi ro. Nhiều giao dịch liên tiếp vẫn có thể gây rủi ro dù từng khoản nhỏ. Bạn hãy dừng chuyển tiền, kiểm tra các giao dịch gần đây và chọn ‘Chuyển tư vấn viên’ để được hỗ trợ. Giao dịch đang chờ vẫn được giữ; các giao dịch đã hoàn tất sẽ được hướng dẫn tra soát, mình không hứa hoàn tiền.”
+
+AI không gọi một tool mới để giả vờ hoàn tác các giao dịch đã hoàn tất. `giu_giao_dich` chỉ áp dụng cho giao dịch đang chờ; phần còn lại chuyển tư vấn viên và tra soát. Đã cân nhắc bỏ qua vì số tiền nhỏ (loại vì gian lận có thể chia nhỏ); tiết lộ ngưỡng (loại vì tạo cách né); tự khóa ví (loại vì ảnh hưởng toàn bộ ví); chọn cảnh báo chung + giữ giao dịch đang chờ + chuyển người.
+
+Lỗi hệ thống thì hiện căn cứ và chuyển người; lỗi người dùng như “giao dịch đó” thì hỏi một câu; lỗi ngữ cảnh bị lừa/viện phí/chuỗi giao dịch nhỏ thì cảnh báo hoặc hướng dẫn nhanh tương ứng. Sửa câu chữ không cứu được việc AI đã gọi `nha_giao_dich`; quyền tool phải bị chặn, giao dịch được giữ mặc định khi có dấu hiệu rủi ro và ca được chuyển người.
 
 HAX/PAIR: G2 ở dòng “Mình đang nói về”; G10 ở câu xác thực khuôn mặt không chứng minh an toàn; G8/G9 + PAIR Control ở trạng thái giữ và các nút xác minh/chuyển người; PAIR Graceful Failure ở màn hình tư vấn viên nhận nguyên ngữ cảnh.
 
@@ -72,7 +81,7 @@ Tool khó xếp nhất là `giu_giao_dich`: tự giữ bảo vệ ca #4/#7 nhưn
 
 Các phương án bị loại cho từng tool: `giu_giao_dich` không chọn “chỉ gợi ý” vì ca #7 có thể mất tiền; `yeu_cau_xac_minh` không cho AI tự hoàn tất vì xác thực đúng không chứng minh an toàn; `chuyen_tu_van_vien` không bắt người dùng tự tìm nhân viên vì sẽ bỏ sót ca nguy hiểm; `nha_giao_dich` không cho AI tự làm vì không đảo ngược; `khoa_vi` không tự khóa vì ca viện phí có thể bị gián đoạn nhiều giờ. Nhóm không thêm tool mới và không tách tool vì prototype chỉ mô phỏng đúng 5 tool của track.
 
-Thử mức đã đặt: ca #7 bị lừa được giữ và không có đường nhả; ca #6 có xác minh nhanh/chuyển ưu tiên; ca #1 chỉ hỏi giao dịch khi chưa đủ căn cứ, không tự giữ hay kết luận. Lời hứa với người dùng là: “AI bảo vệ giao dịch, chỉ đường và chuyển người; người dùng xác nhận bước nhạy cảm, người có thẩm quyền mới quyết định nhả tiền.”
+Thử mức đã đặt: ca #7 bị lừa được giữ và không có đường nhả; ca #6 có xác minh nhanh/chuyển ưu tiên; ca #1 chỉ hỏi giao dịch khi chưa đủ căn cứ, không tự giữ hay kết luận; ca #9 không bỏ qua chuỗi giao dịch nhỏ nhưng cũng không tiết lộ ngưỡng. Lời hứa với người dùng là: “AI bảo vệ giao dịch, chỉ đường và chuyển người; người dùng xác nhận bước nhạy cảm, người có thẩm quyền mới quyết định nhả tiền.”
 
 ## §5. Prototype
 
@@ -80,7 +89,7 @@ Mở [prototype/index.html](prototype/index.html). Nhóm dùng HTML/CSS/JavaScri
 
 Luồng ca khó: người dùng thấy giao dịch 6.200.000đ đang giữ trong 15 phút → xem bằng chứng/xác minh → chuyển tư vấn viên → tư vấn viên thấy nhãn, hội thoại, giao dịch và lý do → giữ giao dịch, yêu cầu xác minh hoặc khóa ví. Nút nhả chỉ xuất hiện ở chế độ tư vấn viên và có xác nhận; hết thời hạn giữ không tự nhả.
 
-Prototype có thêm ca viện phí, người thân nhắn thay chủ ví và ca lạ hỏi ngưỡng. Nhóm loại phương án cho AI nút “Nhả giao dịch” vì trái mức cấm. Không dùng phần trăm tin cậy; dùng trạng thái, bằng chứng và lý do chuyển người.
+Prototype có thêm ca viện phí, người thân nhắn thay chủ ví, ca lạ hỏi ngưỡng và ca nhiều giao dịch nhỏ liên tiếp. Nhóm loại phương án cho AI nút “Nhả giao dịch” vì trái mức cấm. Không dùng phần trăm tin cậy; dùng trạng thái, bằng chứng và lý do chuyển người.
 
 ## §6. Tốt là gì
 
@@ -97,6 +106,6 @@ Lỗi còn lại có chủ ý: người thân hợp pháp nhưng chưa xác minh
 - **Lê Sỹ Long Nhật:** lát cắt, 8 kịch bản, hai rủi ro đắt nhất và mức tự chủ.
 - **Đinh Quốc Việt:** bấm prototype, màn hình người dùng/tư vấn viên, ca demo và kiểm thử.
 
-Demo ca bị lừa: cảnh báo, giữ giao dịch, không xin OTP, chuyển người. Demo ca viện phí: xác minh nhanh và chuyển ưu tiên, không tự nhả. Với ca lạ nhận tại chỗ như “chuyển dưới bao nhiêu thì không bị hỏi?”, prototype từ chối tiết lộ ngưỡng và chuyển tư vấn viên; nhóm không đổi mức tự chủ vì quy tắc an toàn của track vẫn phù hợp.
+Demo ca bị lừa: cảnh báo, giữ giao dịch, không xin OTP, chuyển người. Demo ca viện phí: xác minh nhanh và chuyển ưu tiên, không tự nhả. Với ca lạ nhận tại chỗ như “chuyển dưới bao nhiêu thì không bị hỏi?” hoặc “nhiều khoản nhỏ bị trừ liên tục”, prototype từ chối tiết lộ ngưỡng, khuyên dừng chuyển, giữ giao dịch đang chờ và chuyển tư vấn viên; nhóm không đổi mức tự chủ vì quy tắc an toàn của track vẫn phù hợp.
 
 Checklist: không AI tự nhả; không xin OTP/mật khẩu/số thẻ; không tiết lộ ngưỡng; không hứa hoàn tiền; ca mơ hồ có hỏi lại; chuyển người giữ ngữ cảnh.

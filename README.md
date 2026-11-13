@@ -21,7 +21,7 @@
 - Có 8 kịch bản phủ 4 lớp lỗi và 2 kịch bản rủi ro cao.
 - Có mức tự chủ và cost-of-error cho toàn bộ 5 tool.
 - Có prototype người dùng và tư vấn viên.
-- Có ca bị lừa, ca viện phí, người thân nhắn thay và ca lạ hỏi ngưỡng.
+- Có ca bị lừa, ca viện phí, người thân nhắn thay, ca lạ hỏi ngưỡng và ca nhiều giao dịch nhỏ liên tiếp.
 - Có xác nhận trước thao tác khóa ví/nhả giao dịch.
 - AI không tự nhả giao dịch, không xin OTP/mật khẩu/số thẻ và không tiết lộ ngưỡng chống gian lận.
 - Có ảnh minh họa được đánh số trong `prototype/screenshots/`.

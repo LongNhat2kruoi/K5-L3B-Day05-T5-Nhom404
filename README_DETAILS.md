@@ -19,7 +19,7 @@ AI không được tự gọi `nha_giao_dich`, xin OTP/mật khẩu/số thẻ �
 
 - Màn hình người dùng và màn hình tư vấn viên.
 - Giao dịch dựng 6.200.000đ lúc 23:48 đang tạm giữ, còn 15 phút.
-- Ca bị lừa, ca viện phí, người thân nhắn thay chủ ví và ca lạ hỏi ngưỡng.
+- Ca bị lừa, ca viện phí, người thân nhắn thay chủ ví, ca lạ hỏi ngưỡng và chuỗi giao dịch nhỏ liên tiếp.
 - Xem bằng chứng, xác minh an toàn và chuyển tư vấn viên giữ nguyên ngữ cảnh.
 - Tư vấn viên thấy tóm tắt hội thoại, nhãn ca, giao dịch và lý do chuyển.
 - Khóa ví và nhả giao dịch đều có hộp xác nhận; AI không có quyền nhả.
@@ -35,6 +35,7 @@ AI không được tự gọi `nha_giao_dich`, xin OTP/mật khẩu/số thẻ �
 - [x] Không có luồng AI tự nhả giao dịch.
 - [x] Không xin OTP, mật khẩu hoặc số thẻ đầy đủ.
 - [x] Không tiết lộ ngưỡng chống gian lận.
+- [x] Không bỏ qua chuỗi giao dịch nhỏ và không tiết lộ quy tắc phát hiện.
 - [x] Không hứa hoàn tiền cho giao dịch đã hoàn tất.
 - [x] Ca mơ hồ có câu hỏi/giới hạn phù hợp.
 - [x] Có đường chuyển tư vấn viên.
@@ -49,3 +50,4 @@ AI không được tự gọi `nha_giao_dich`, xin OTP/mật khẩu/số thẻ �
 2. Chọn “Ca viện phí”, kiểm tra xác minh nhanh và chuyển ưu tiên; AI không tự nhả.
 3. Chọn “Người thân nhắn” để kiểm tra không xác nhận danh tính thay chủ ví.
 4. Chọn “Ca lạ” để kiểm tra từ chối tiết lộ ngưỡng.
+5. Chọn “Giao dịch nhỏ liên tiếp” để kiểm tra cảnh báo chuỗi giao dịch, giữ giao dịch đang chờ, không hứa hoàn tiền và chuyển tư vấn viên.
