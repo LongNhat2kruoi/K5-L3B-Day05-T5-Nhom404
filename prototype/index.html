@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chat với ví — T5 Nhom404</title>
+  <style>
+    :root{--ink:#18212b;--muted:#65717d;--line:#d9e0e7;--bg:#f4f7f9;--card:#fff;--blue:#155eef;--blue-bg:#eaf1ff;--warn:#9a6700;--warn-bg:#fff4cc;--danger:#b42318;--danger-bg:#fee4e2;--ok:#067647;--ok-bg:#e7f6ec}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Arial,sans-serif}
+    header{background:#fff;border-bottom:1px solid var(--line);padding:20px max(20px,calc((100% - 1120px)/2))}h1{margin:0 0 4px;font-size:22px}.sub{color:var(--muted)}
+    main{max-width:1120px;margin:24px auto;padding:0 20px;display:grid;grid-template-columns:440px 1fr;gap:20px}.phone,.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 2px 8px #18212b0d}.phone{padding:16px}.bar{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;border-bottom:1px solid var(--line);padding-bottom:10px}.chat{display:flex;flex-direction:column;gap:12px;min-height:520px;padding-top:14px}.me{align-self:flex-end;background:var(--blue);color:#fff;border-radius:14px 14px 3px 14px;padding:10px 12px;max-width:86%}.ai{background:#f0f3f6;border-radius:14px 14px 14px 3px;padding:12px;max-width:96%}.who{font-size:12px;color:var(--muted);margin-bottom:5px}.risk{background:var(--danger-bg);border:1px solid #f3aaa5;border-radius:10px;padding:10px;margin-top:8px}.evidence{border-left:3px solid var(--blue);padding:7px 10px;margin-top:9px;background:var(--blue-bg);font-size:13px}.buttons{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.btn{border:0;border-radius:9px;padding:9px 11px;cursor:pointer;background:#e6ebf0;color:var(--ink);font:inherit;font-size:13px}.primary{background:var(--blue);color:#fff}.outline{background:#fff;border:1px solid var(--ink)}.danger{background:var(--danger);color:#fff}.panel{padding:18px}.panel h2{margin:0 0 10px;font-size:17px}.panel+.panel{margin-top:16px}.status{padding:11px;border-radius:10px;background:var(--warn-bg);color:var(--warn);border:1px solid #ebd28b}.row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:9px 0}.pill{border-radius:999px;padding:3px 8px;font-size:12px;font-weight:bold}.auto{background:var(--ok-bg);color:var(--ok)}.ask{background:var(--warn-bg);color:var(--warn)}.blocked{background:var(--danger-bg);color:var(--danger)}.note{font-size:13px;color:var(--muted);margin-top:10px}@media(max-width:800px){main{grid-template-columns:1fr}.phone{max-width:520px;margin:auto}}
+  </style>
+</head>
+<body>
+  <header><h1>Chat với ví</h1><div class="sub">Prototype T5 · giao dịch đang bị tạm giữ · dữ liệu dựng</div></header>
+  <main>
+    <section class="phone" aria-label="Màn hình chat người dùng"><div class="bar"><span>Ví của Nguyễn Minh An</span><span>23:48</span></div><div id="chat" class="chat"></div></section>
+    <aside>
+      <div class="panel"><h2>Trạng thái giao dịch</h2><div class="status"><b>Đang tạm giữ</b><br>Giao dịch 6.200.000đ · 23:48</div><p class="note">AI không hiển thị ngưỡng hoặc cách hệ thống phát hiện rủi ro.</p></div>
+      <div class="panel"><h2>Mức tự chủ đã chốt</h2><div class="row"><code>giu_giao_dich</code><span class="pill auto">Tự làm</span></div><div class="row"><code>yeu_cau_xac_minh</code><span class="pill ask">Cần duyệt</span></div><div class="row"><code>chuyen_tu_van_vien</code><span class="pill auto">Tự làm</span></div><div class="row"><code>nha_giao_dich</code><span class="pill blocked">Cấm AI</span></div><div class="row"><code>khoa_vi</code><span class="pill ask">Cần duyệt</span></div></div>
+    </aside>
+  </main>
+  <script>
+    const chat=document.querySelector('#chat');
+    function render(extra=''){chat.innerHTML=`<div class="me">Người ta gọi bảo tôi liên quan vụ án, bắt tôi nhả giao dịch. Mở giúp tôi đi.</div><div class="ai"><div class="who">Trợ lý ví · AI</div><div class="risk"><b>Mình khuyên bạn dừng lại và không chuyển tiền.</b><br>Việc xác thực khuôn mặt đúng không có nghĩa giao dịch này an toàn. Mình không thể tự nhả giao dịch thay bạn.</div><div class="evidence"><b>Mình đang nói về:</b><br>Giao dịch 6.200.000đ lúc 23:48 · trạng thái: đang tạm giữ<br><span class="note">Không yêu cầu OTP, mật khẩu hoặc số thẻ trong đoạn chat.</span></div><div class="buttons"><button class="btn outline" onclick="showTransaction()">Xem giao dịch</button><button class="btn primary" onclick="requestVerify()">Xác minh an toàn</button><button class="btn danger" onclick="transferAdvisor()">Chuyển tư vấn viên</button></div>${extra}</div>`}
+    function showTransaction(){render('<div class="evidence"><b>Chi tiết giao dịch dựng:</b><br>Người nhận: Cửa hàng mẫu · Số tiền: 6.200.000đ · Thời gian: 23:48<br>AI chỉ hiển thị thông tin giao dịch để bạn kiểm tra, không tự nhả tiền.</div>')}
+    function requestVerify(){render('<div class="status"><b>Bạn cần chủ động xác nhận trên màn hình xác thực chính thức.</b><br>Không gửi mã một lần hoặc mật khẩu trong chat. Nếu bạn đang bị ai đó thúc ép, hãy chọn “Chuyển tư vấn viên”.</div>')}
+    function transferAdvisor(){render('<div class="status" style="background:var(--ok-bg);color:var(--ok);border-color:#9bd6b3"><b>Đã chuyển tư vấn viên.</b><br>Tư vấn viên sẽ thấy giao dịch đang giữ và nội dung bạn đã cung cấp; bạn không cần kể lại từ đầu.</div>')}
+    render();
+  </script>
+</body>
+</html>
